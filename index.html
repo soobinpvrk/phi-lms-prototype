@@ -146,6 +146,9 @@ a{color:inherit;text-decoration:none}
 .ahead{display:flex;justify-content:space-between;align-items:flex-start;gap:28px;padding-bottom:20px;border-bottom:1px solid var(--line)}
 .ahead h2{font-size:20px;font-weight:700;line-height:1.4}
 .ahead .eng{font-size:13px;color:var(--muted);margin-bottom:7px}
+.chead{display:flex;justify-content:space-between;align-items:center;gap:24px;padding-bottom:20px;margin-bottom:20px;border-bottom:1px solid #EAEBEE}
+.chead h2{font-size:20px;font-weight:700;color:#141414}
+.chead .sub{font-size:14px;color:#8B95A1;margin-top:4px}
 .due2{flex:0 0 auto;text-align:right}
 .due2 .lab{font-size:12px;color:var(--muted)}
 .due2 .v{font-size:15px;margin-top:4px}
@@ -164,7 +167,6 @@ a{color:inherit;text-decoration:none}
      background:#fff;white-space:nowrap;margin-left:auto}
 .btn:hover{border-color:#141414}
 .btn.primary{background:#141414;color:#fff;border-color:#141414;font-weight:500}
-.note{margin-top:20px;font-size:13px;color:var(--muted);background:var(--bg);padding:14px 16px;border-radius:8px;line-height:1.6}
 
 /* ── viewer ── */
 .mask{position:fixed;inset:0;background:rgba(20,20,20,.55);display:none;place-items:center;z-index:50;padding:32px}
@@ -330,11 +332,12 @@ a{color:inherit;text-decoration:none}
   <div id="v-course" class="hide">
     <div class="crumb"><button onclick="go('courses')">과목</button> › <span>Iterative Problem Solving</span></div>
     <div class="detail">
-      <div class="ahead" style="border-bottom:0;padding-bottom:0">
+      <div class="chead">
         <div>
-          <div class="eng">Iterative Problem Solving · Track A</div>
-          <h2>파고드는 문제 해결</h2>
+          <h2>Iterative Problem Solving</h2>
+          <div class="sub">파고드는 문제 해결 · Track A</div>
         </div>
+        <span class="btn" onclick="openViewer()">코스 프로필</span>
       </div>
       <div id="wksecs"></div>
     </div>
@@ -361,9 +364,6 @@ a{color:inherit;text-decoration:none}
         <a class="slot" href="https://docs.google.com/document/d/1zdDlGum9i_57FXLXJtD4MnfzRVMJZVTvBmdTFD3Okws/edit?tab=t.0" target="_blank">
           <span class="sbody"><span class="st">가이드라인</span></span>
           <span class="btn">구글 독스에서 보기</span></a>
-        <button class="slot" onclick="openViewer()">
-          <span class="sbody"><span class="st">코스 프로필</span></span>
-          <span class="btn">여기서 보기</span></button>
 
         <div class="slotlab" style="margin-top:24px">제출</div>
         <a class="slot" href="https://docs.google.com/forms/d/e/1FAIpQLSepjsSAj-G9kGbWKYq_oFPgaYax0JFimX3MSPU9QQ-e8qjbEA/viewform" target="_blank">
@@ -373,7 +373,6 @@ a{color:inherit;text-decoration:none}
           <span class="sbody"><span class="st">셀프피드백</span><span class="sd">구글 폼 · 9/4 (금) 23:59 마감</span></span>
           <span class="btn">작성하기</span></a>
       </div>
-      <div class="note">v0.1 이라도 먼저 제출할 수 있어요. 제출 후에도 문서를 이어서 고칠 수 있습니다.</div>
     </div>
   </div>
 </div>
@@ -412,7 +411,7 @@ document.getElementById('cgrid').innerHTML = courses.map(c => c.live
 const weekSections = [
   {range:'Warm-up~3주차', desc:'동료 학습자의 불편함에서 좋은 문제를 골라내는 기준을 익힌다', weeks:[
     {wk:'0주차', rows:[
-      {nm:'Track A - IPS 0주차 사전 과제', sub:'제출 · 셀프피드백 포함', due:'9/6 (일) 23:59', dd:'D-7', btn:'열기', active:true}
+      {nm:'Track A - IPS 0주차 사전 과제', due:'9/6 (일) 23:59', dd:'D-7', btn:'열기', active:true}
     ]},
     {wk:'1주차'}, {wk:'2주차'}, {wk:'3주차'}
   ]},
