@@ -35,7 +35,7 @@ a{color:inherit;text-decoration:none}
 .ico svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.4}
 .new{margin-left:auto;font-size:10px;font-weight:700;background:var(--blue);color:#fff;padding:2px 5px;border-radius:4px}
 .me{margin-top:auto;display:flex;align-items:center;gap:10px;padding-top:16px;border-top:1px solid rgba(255,255,255,.1)}
-.av{width:40px;height:40px;border-radius:50%;background:#E9ECEF;color:#141414;
+.av{width:40px;height:40px;border-radius:50%;background:transparent;border:1px solid rgba(255,255,255,.28);color:#fff;
   display:grid;place-items:center;font-size:14px;font-weight:500;flex:0 0 40px}
 .me b{font-size:14px;font-weight:600;display:block}
 .me small{display:block;color:var(--gray400);font-size:12px;margin-top:2px}
@@ -118,7 +118,6 @@ a{color:inherit;text-decoration:none}
 .course .meta{font-size:13px;color:var(--muted);display:flex;gap:7px;align-items:center}
 .course.empty{opacity:.45;cursor:default}
 .course.empty:hover{border-color:transparent;transform:none}
-.dot{width:5px;height:5px;border-radius:50%;background:var(--red);display:inline-block}
 
 /* ── assignment ── */
 .crumb{font-size:13px;color:var(--muted);margin-bottom:12px;display:flex;gap:7px}
@@ -129,20 +128,21 @@ a{color:inherit;text-decoration:none}
 .ahead .eng{font-size:13px;color:var(--muted);margin-bottom:7px}
 .due2{flex:0 0 auto;text-align:right}
 .due2 .lab{font-size:12px;color:var(--muted)}
-.due2 .v{font-size:15px;font-weight:700;color:var(--red);margin-top:4px}
+.due2 .v{font-size:15px;margin-top:4px}
+.pill-due{background:#FEECEE;border:1px solid rgba(240,68,82,.3);color:#F04452;
+  padding:4px 10px;border-radius:6px;display:inline-block;font-weight:500}
 .due2 .late{font-size:12px;color:var(--muted);margin-top:4px}
 .slots{margin-top:24px;display:flex;flex-direction:column;gap:8px}
 .slotlab{font-size:13px;font-weight:700;color:var(--muted);margin-bottom:6px}
 .slot{display:flex;align-items:center;gap:14px;padding:16px;border:1px solid #EDEEF0;border-radius:10px;
   background:var(--card);width:100%;text-align:left;transition:.15s}
 .slot:hover{border-color:var(--ink);background:#FAFBFC}
-.slot .si{width:32px;height:32px;border-radius:8px;background:var(--bg);display:grid;place-items:center;font-size:15px;flex:0 0 32px}
-.slot .st{font-size:15px;font-weight:600}
-.slot .sd{font-size:13px;color:var(--muted);margin-top:3px}
+.sbody{display:flex;flex-direction:column;gap:3px}
+.slot .st{font-size:15px;font-weight:600;display:block}
+.slot .sd{font-size:13px;color:var(--muted);display:block}
 .slot .go{margin-left:auto;font-size:13px;color:var(--muted)}
-.slot.act{border-color:var(--blue);background:var(--blue-bg)}
-.slot.act .si{background:#fff}
-.slot.act .go{color:var(--blue);font-weight:600}
+.slot.act{border-color:#141414;background:#fff}
+.slot.act .go{color:#141414;font-weight:700}
 .note{margin-top:20px;font-size:13px;color:var(--muted);background:var(--bg);padding:14px 16px;border-radius:8px;line-height:1.6}
 
 /* ── viewer ── */
@@ -321,32 +321,27 @@ a{color:inherit;text-decoration:none}
           <h2>Track A - IPS 0주차 사전 과제</h2>
         </div>
         <div class="due2">
-          <div class="lab">마감</div><div class="v">9/6 (일) 23:59</div>
+          <div class="lab">마감</div><div class="v"><span class="pill-due">9/6 (일) 23:59</span></div>
         </div>
       </div>
       <div class="slots">
         <div class="slotlab">수행</div>
         <a class="slot" href="https://discord.com/channels/1491311095606939728/1541687428807528489" target="_blank">
-          <span class="si">💬</span>
-          <span><span class="st">과제 지시문</span><span class="sd">디스코드 · 전문가 공지와 질문 스레드</span></span>
+          <span class="sbody"><span class="st">과제 지시문</span><span class="sd">디스코드 · 전문가 공지와 질문 스레드</span></span>
           <span class="go">열기 ↗</span></a>
         <a class="slot" href="https://docs.google.com/document/d/1zdDlGum9i_57FXLXJtD4MnfzRVMJZVTvBmdTFD3Okws/edit?tab=t.0" target="_blank">
-          <span class="si">📄</span>
-          <span><span class="st">가이드라인</span><span class="sd">구글 독스 · Warm-up~3주차 탭으로 바로 열림</span></span>
+          <span class="sbody"><span class="st">가이드라인</span><span class="sd">구글 독스 · Warm-up~3주차 탭으로 바로 열림</span></span>
           <span class="go">열기 ↗</span></a>
         <button class="slot" onclick="openViewer()">
-          <span class="si">📘</span>
-          <span><span class="st">코스 프로필</span><span class="sd">이 화면에서 넘겨보기 · 루브릭 포함</span></span>
+          <span class="sbody"><span class="st">코스 프로필</span><span class="sd">이 화면에서 넘겨보기 · 루브릭 포함</span></span>
           <span class="go">보기</span></button>
 
         <div class="slotlab" style="margin-top:24px">제출</div>
         <a class="slot act" href="https://docs.google.com/forms/d/e/1FAIpQLSepjsSAj-G9kGbWKYq_oFPgaYax0JFimX3MSPU9QQ-e8qjbEA/viewform" target="_blank">
-          <span class="si">📤</span>
-          <span><span class="st">과제 제출</span><span class="sd">구글 폼 · 9/6 (일) 23:59 마감</span></span>
+          <span class="sbody"><span class="st">과제 제출</span><span class="sd">구글 폼 · 9/6 (일) 23:59 마감</span></span>
           <span class="go">제출하기 ↗</span></a>
         <a class="slot" href="https://docs.google.com/forms/d/e/1FAIpQLSeZZnrHPTpprHzhIGVgxsQr96n_vl52vbistW58IBOHM4vLeA/viewform" target="_blank">
-          <span class="si">✍️</span>
-          <span><span class="st">셀프피드백</span><span class="sd">구글 폼 · 9/4 (금) 23:59 마감</span></span>
+          <span class="sbody"><span class="st">셀프피드백</span><span class="sd">구글 폼 · 9/4 (금) 23:59 마감</span></span>
           <span class="go">작성하기 ↗</span></a>
       </div>
       <div class="note">v0.1 이라도 먼저 제출할 수 있어요. 제출 후에도 문서를 이어서 고칠 수 있습니다.</div>
@@ -397,7 +392,7 @@ const courses = [
 ];
 document.getElementById('cgrid').innerHTML = courses.map(c => c.live
   ? `<button class="course" onclick="go('ips')"><div class="eng">${c.en}</div><h3>${c.ko}</h3>
-     <div class="meta"><span class="dot"></span>${c.due}</div></button>`
+     <div class="meta"><span class="pill-due">${c.due}</span></div></button>`
   : `<div class="course empty"><div class="eng">${c.en}</div><h3>${c.ko}</h3>
      <div class="meta">과제 없음</div></div>`).join('');
 
