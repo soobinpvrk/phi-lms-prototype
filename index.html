@@ -132,6 +132,7 @@ a{color:inherit;text-decoration:none}
 .wktbl td{padding:14px 8px;vertical-align:middle}
 .wktbl .wk{width:64px;color:var(--muted);font-size:13px}
 .wktbl .nm{font-weight:500}
+.wktbl .nm-sub{font-size:12px;color:var(--muted);margin-top:3px;font-weight:400}
 .wktbl .due{width:150px;color:var(--muted);font-size:13px}
 .wktbl .dd{width:56px;font-size:13px;font-weight:600;color:var(--gray400)}
 .wktbl .dd.soon{color:var(--red)}
@@ -411,8 +412,7 @@ document.getElementById('cgrid').innerHTML = courses.map(c => c.live
 const weekSections = [
   {range:'Warm-up~3주차', desc:'동료 학습자의 불편함에서 좋은 문제를 골라내는 기준을 익힌다', weeks:[
     {wk:'0주차', rows:[
-      {nm:'Track A - IPS 0주차 사전 과제', due:'9/6 (일) 23:59', dd:'D-7', btn:'열기', active:true},
-      {nm:'IPS 0주차 셀프피드백', due:'9/4 (금) 23:59', dd:'D-5', btn:'작성하기'}
+      {nm:'Track A - IPS 0주차 사전 과제', sub:'제출 · 셀프피드백 포함', due:'9/6 (일) 23:59', dd:'D-7', btn:'열기', active:true}
     ]},
     {wk:'1주차'}, {wk:'2주차'}, {wk:'3주차'}
   ]},
@@ -430,7 +430,9 @@ function weekRow(wk, r){
   if (!r) return `<tr class="tbd"><td class="wk">${wk}</td><td class="nm">공개 예정</td><td class="due">–</td><td class="dd">–</td><td class="ac"></td></tr>`;
   const soon = Number(r.dd.replace('D-','')) <= 7;
   return `<tr class="${r.active?'active':''}" ${r.active?`onclick="go('ips')"`:''}>
-    <td class="wk">${wk}</td><td class="nm">${r.nm}</td><td class="due">${r.due}</td>
+    <td class="wk">${wk}</td>
+    <td class="nm">${r.nm}${r.sub?`<div class="nm-sub">${r.sub}</div>`:''}</td>
+    <td class="due">${r.due}</td>
     <td class="dd${soon?' soon':''}">${r.dd}</td>
     <td class="ac">${r.btn?`<span class="btn${r.active?' primary':''}">${r.btn}</span>`:''}</td></tr>`;
 }
