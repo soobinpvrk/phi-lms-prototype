@@ -1,0 +1,426 @@
+<meta charset="utf-8">
+<title>Phi LMS</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+/* spacing scale: x1=4 x2=8 x3=12 x4=16 x5=20 x6=24 x8=32 x10=40 */
+:root{
+  --bg:#F4F5F6; --card:#fff; --ink:#141414; --gray400:#9C9C9C; --muted:#8B95A1;
+  --line:#F0F1F3; --sidebar:#141414; --blue:#3182F6; --blue-bg:#EBF3FE;
+  --red:#F04452; --red-bg:#FEECEE;
+  --r:12px; --sh:0 1px 2px rgba(20,20,20,.05), 0 0 0 1px rgba(20,20,20,.03);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:Pretendard,-apple-system,sans-serif;
+  -webkit-font-smoothing:antialiased;word-break:keep-all;font-size:14px;min-height:100vh;
+  padding:32px 40px 80px;padding-left:calc(220px + 32px)}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1245px;margin:0 auto;display:flex;flex-direction:column;gap:32px}
+
+/* ── sidebar ── */
+.side{position:fixed;top:16px;bottom:16px;left:16px;width:220px;background:var(--sidebar);
+  border-radius:var(--r);padding:24px 16px;display:flex;flex-direction:column;color:#fff;z-index:10}
+.top{display:flex;align-items:flex-start;justify-content:space-between;padding-left:12px}
+.logo{font-size:15px;font-weight:700;line-height:1.3;letter-spacing:-.01em}
+.collapse{width:32px;height:32px;border-radius:8px;border:1px solid rgba(255,255,255,.14);
+  color:rgba(255,255,255,.7);font-size:13px;display:grid;place-items:center}
+.collapse:hover{background:rgba(255,255,255,.08)}
+.rule{height:1px;background:rgba(255,255,255,.1);margin-top:20px}
+.nav{margin-top:20px;display:flex;flex-direction:column;gap:4px}
+.nav button{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:6px;
+  font-size:14px;color:var(--gray400);width:100%;text-align:left;transition:.12s}
+.nav button:hover{background:rgba(255,255,255,.1);color:#fff}
+.nav button.on{background:rgba(255,255,255,.1);color:#fff;font-weight:700}
+.ico{width:16px;height:16px;flex:0 0 16px;display:grid;place-items:center}
+.ico svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.4}
+.new{margin-left:auto;font-size:10px;font-weight:700;background:var(--blue);color:#fff;padding:2px 5px;border-radius:4px}
+.me{margin-top:auto;display:flex;align-items:center;gap:10px;padding-top:16px;border-top:1px solid rgba(255,255,255,.1)}
+.av{width:40px;height:40px;border-radius:50%;background:#E9ECEF;color:#141414;
+  display:grid;place-items:center;font-size:14px;font-weight:500;flex:0 0 40px}
+.me b{font-size:14px;font-weight:600;display:block}
+.me small{display:block;color:var(--gray400);font-size:12px;margin-top:2px}
+.dots{margin-left:auto;color:var(--gray400);font-size:16px;line-height:1;padding:0 4px}
+
+/* ── header bar ── */
+.bar{background:var(--card);border-radius:var(--r);padding:12px 16px;box-shadow:var(--sh);
+  display:flex;align-items:center;justify-content:space-between;gap:24px}
+.bar h1{font-size:20px;font-weight:700;padding-left:8px}
+.ext{display:flex;gap:20px;font-size:14px}
+.ext a{display:flex;align-items:center;gap:7px;padding:6px 8px;border-radius:6px;
+  text-decoration:underline;text-underline-offset:3px;text-decoration-color:#D6D9DD}
+.ext a:hover{background:#F6F7F8;text-decoration-color:currentColor}
+.ext i{width:18px;height:18px;border-radius:5px;display:grid;place-items:center;font-size:9px;font-style:normal;color:#fff}
+.i-dc{background:#5865F2}.i-fg{background:#0ACF83}.i-ph{background:#141414}
+
+/* ── sections ── */
+.head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:24px;min-height:34px}
+.sec{font-size:20px;font-weight:700;letter-spacing:-.01em}
+.search{display:flex;align-items:center;gap:8px;border-bottom:1px solid #E5E5E5;padding:6px 2px;width:300px;color:var(--muted)}
+.search input{border:0;outline:0;font:inherit;background:none;width:100%;color:var(--ink)}
+.panel{background:var(--card);border-radius:var(--r);padding:12px 16px 16px;box-shadow:var(--sh)}
+.grid2{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:24px;align-items:start}
+
+/* ── notice ── */
+.notice{display:flex;align-items:center;gap:16px;padding:16px 8px;border-bottom:1px solid var(--line);font-size:15px}
+.notice:last-of-type{border:0}
+.tag{font-size:13px;color:var(--blue);background:var(--blue-bg);padding:5px 14px;border-radius:99px;flex:0 0 auto}
+.when{margin-left:auto;font-size:13px;color:#C4C8CD;flex:0 0 auto}
+.more{display:block;width:100%;text-align:center;padding:14px 0 8px;font-size:14px;color:var(--muted)}
+.more:hover{color:var(--ink)}
+
+/* ── todo ── */
+.tabs{display:flex;align-items:center;gap:20px;border-bottom:1px solid var(--line);font-size:15px;padding:8px 8px 0}
+.tabs span{color:var(--muted);padding-bottom:10px;cursor:pointer}
+.tabs .on{font-weight:700;color:var(--ink);border-bottom:2px solid var(--ink);margin-bottom:-1px}
+.tabs .n{color:#C4C8CD;font-weight:400;margin-left:5px;font-size:14px}
+.tabs .filt{margin-left:auto;color:var(--muted);font-size:16px}
+.grouplab{font-size:13px;color:var(--muted);padding:16px 8px 4px}
+.todo{display:flex;gap:16px;padding:12px 8px;border-radius:8px;width:100%;text-align:left;align-items:flex-start;transition:.12s}
+.todo:hover{background:#F8F9FA}
+.d{text-align:center;flex:0 0 34px;padding-top:2px}
+.d b{display:block;font-size:16px;font-weight:700;line-height:1.15}
+.d small{font-size:11px;color:var(--muted)}
+.todo .sub{font-size:13px;color:var(--muted)}
+.todo .t{font-size:15px;font-weight:500;margin-top:4px;line-height:1.45;
+  text-decoration:underline;text-underline-offset:4px;text-decoration-color:#DDE1E5}
+.todo.done{opacity:.4}
+.hint{font-size:12px;color:var(--blue);margin-top:6px;font-weight:600;opacity:0;transition:.15s}
+.todo:hover .hint{opacity:1}
+
+/* ── calendar ── */
+.calbar{display:flex;align-items:center;justify-content:space-between;padding:12px 8px 16px}
+.month{display:flex;align-items:center;gap:14px;font-size:17px;font-weight:700}
+.month button{color:var(--muted);font-size:14px}
+.trk{display:flex;gap:16px;font-size:14px;align-items:center}
+.trk label{display:flex;align-items:center;gap:6px;cursor:pointer;color:var(--muted)}
+.trk input{accent-color:var(--ink);width:15px;height:15px}
+.trk label.on{color:var(--ink)}
+.cal{width:100%;border-collapse:collapse;table-layout:fixed}
+.cal th{font-size:13px;font-weight:400;color:var(--muted);padding:10px 0;border-bottom:1px solid var(--line)}
+.cal td{height:86px;vertical-align:top;padding:8px 4px;font-size:13px;border-bottom:1px solid var(--line)}
+.cal .num{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%}
+.cal .off{color:#D3D6DA}
+.cal .today .num{background:var(--ink);color:#fff;font-weight:700}
+.hol{font-size:11px;color:var(--muted);display:block;margin-top:3px}
+.ev{font-size:11px;background:#F4F5F6;border-radius:4px;padding:3px 5px;margin-top:4px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ev.due{background:var(--red-bg);color:var(--red)}
+
+/* ── courses ── */
+.filter{display:flex;gap:8px;margin-bottom:16px}
+.chip{font-size:14px;padding:8px 16px;border-radius:99px;background:var(--card);color:var(--muted);box-shadow:var(--sh)}
+.chip.on{background:var(--ink);color:#fff;font-weight:600;box-shadow:none}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));gap:16px}
+.course{background:var(--card);border-radius:var(--r);padding:20px;text-align:left;
+  transition:.15s;box-shadow:var(--sh);border:1px solid transparent}
+.course:hover{border-color:var(--ink);transform:translateY(-2px)}
+.course .eng{font-size:12px;color:var(--muted)}
+.course h3{font-size:17px;font-weight:700;margin:6px 0 16px}
+.course .meta{font-size:13px;color:var(--muted);display:flex;gap:7px;align-items:center}
+.course.empty{opacity:.45;cursor:default}
+.course.empty:hover{border-color:transparent;transform:none}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--red);display:inline-block}
+
+/* ── assignment ── */
+.crumb{font-size:13px;color:var(--muted);margin-bottom:12px;display:flex;gap:7px}
+.crumb button:hover{color:var(--ink);text-decoration:underline}
+.detail{background:var(--card);border-radius:var(--r);padding:24px;box-shadow:var(--sh)}
+.ahead{display:flex;justify-content:space-between;align-items:flex-start;gap:28px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.ahead h2{font-size:20px;font-weight:700;line-height:1.4}
+.ahead .eng{font-size:13px;color:var(--muted);margin-bottom:7px}
+.due2{flex:0 0 auto;text-align:right}
+.due2 .lab{font-size:12px;color:var(--muted)}
+.due2 .v{font-size:15px;font-weight:700;color:var(--red);margin-top:4px}
+.due2 .late{font-size:12px;color:var(--muted);margin-top:4px}
+.slots{margin-top:24px;display:flex;flex-direction:column;gap:8px}
+.slotlab{font-size:13px;font-weight:700;color:var(--muted);margin-bottom:6px}
+.slot{display:flex;align-items:center;gap:14px;padding:16px;border:1px solid #EDEEF0;border-radius:10px;
+  background:var(--card);width:100%;text-align:left;transition:.15s}
+.slot:hover{border-color:var(--ink);background:#FAFBFC}
+.slot .si{width:32px;height:32px;border-radius:8px;background:var(--bg);display:grid;place-items:center;font-size:15px;flex:0 0 32px}
+.slot .st{font-size:15px;font-weight:600}
+.slot .sd{font-size:13px;color:var(--muted);margin-top:3px}
+.slot .go{margin-left:auto;font-size:13px;color:var(--muted)}
+.slot.act{border-color:var(--blue);background:var(--blue-bg)}
+.slot.act .si{background:#fff}
+.slot.act .go{color:var(--blue);font-weight:600}
+.note{margin-top:20px;font-size:13px;color:var(--muted);background:var(--bg);padding:14px 16px;border-radius:8px;line-height:1.6}
+
+/* ── viewer ── */
+.mask{position:fixed;inset:0;background:rgba(20,20,20,.55);display:none;place-items:center;z-index:50;padding:32px}
+.mask.open{display:grid}
+.viewer{background:var(--card);border-radius:var(--r);width:min(880px,100%);max-height:100%;display:flex;flex-direction:column;overflow:hidden}
+.vhead{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.vhead b{font-size:15px}
+.vbody{flex:1;overflow:auto;background:var(--bg);padding:24px;display:grid;place-items:center;min-height:420px}
+.page{background:#fff;width:100%;max-width:640px;aspect-ratio:1/1.414;border-radius:8px;
+  box-shadow:0 2px 12px rgba(0,0,0,.08);padding:56px 48px;font-size:13px;line-height:1.85;overflow:auto}
+.page h4{font-size:17px;font-weight:700;margin-bottom:14px}
+.page .lab{font-size:11px;color:var(--muted);letter-spacing:.08em;margin-bottom:20px}
+.page ul{margin:10px 0 0 18px}
+.vfoot{padding:12px 20px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:center;gap:20px;font-size:13px}
+.vfoot button{padding:7px 16px;border:1px solid #E5E7EA;border-radius:8px}
+.vfoot button:hover{border-color:var(--ink)}
+.vfoot button:disabled{opacity:.35;cursor:default}
+.hide{display:none!important}
+@media(max-width:1080px){.grid2{grid-template-columns:1fr}}
+@media(max-width:900px){.side{display:none}body{padding-left:24px;padding-right:24px}}
+</style>
+
+<nav class="side">
+  <div class="top">
+    <div class="logo">Phi<br>Institute of<br>Design</div>
+    <button class="collapse">‹</button>
+  </div>
+  <div class="rule"></div>
+  <div class="nav">
+    <button onclick="go('home')" id="n-home"><span class="ico"><svg viewBox="0 0 20 20"><path d="M3 8l7-5 7 5v8a1 1 0 01-1 1h-4v-5H8v5H4a1 1 0 01-1-1z"/></svg></span>홈</button>
+    <button onclick="go('cal')" id="n-cal"><span class="ico"><svg viewBox="0 0 20 20"><rect x="3" y="4.5" width="14" height="12" rx="2"/><path d="M3 8h14M7 3v3M13 3v3"/></svg></span>캘린더</button>
+    <button onclick="go('courses')" id="n-courses"><span class="ico"><svg viewBox="0 0 20 20"><path d="M4 4h5a2 2 0 012 2v10a1.5 1.5 0 00-1.5-1.5H4zM16 4h-5a2 2 0 00-2 2v10a1.5 1.5 0 011.5-1.5H16z"/></svg></span>과목<span class="new">NEW</span></button>
+  </div>
+  <div class="me">
+    <div class="av">박</div>
+    <div><b>박수빈</b><small>A트랙 · 2608011</small></div>
+    <span class="dots">⋮</span>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="bar">
+    <h1 id="title">홈</h1>
+    <div class="ext">
+      <a href="https://discord.com/channels/1491311095606939728/1541687428807528489" target="_blank"><i class="i-dc">◉</i>Phi 디스코드</a>
+      <a href="https://www.figma.com" target="_blank"><i class="i-fg">◈</i>Phi 피그마</a>
+      <a href="#" onclick="return false"><i class="i-ph">✕</i>공간 예약하기</a>
+    </div>
+  </div>
+
+  <!-- HOME -->
+  <div id="v-home" style="display:flex;flex-direction:column;gap:32px">
+    <div>
+      <div class="head">
+        <div class="sec">NOTICE</div>
+        <div class="search">🔍<input placeholder="공지 내용 검색"></div>
+      </div>
+      <div class="panel">
+        <div class="notice"><span class="tag">운영</span>Learning Design Team as Input<span class="when">송민준 · 1일 전</span></div>
+        <div class="notice"><span class="tag">운영</span>후드집업 사이즈 수요조사 안내 (~08/31)<span class="when">윤다솔 · 1일 전</span></div>
+        <div class="notice"><span class="tag">운영</span>Warm-up 5일차 오프닝 공지<span class="when">김자유 · 2일 전</span></div>
+        <button class="more">더보기 10건 ⌄</button>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div>
+        <div class="head"><div class="sec">CALENDAR</div></div>
+        <div class="panel">
+          <div class="calbar">
+            <div class="month"><button>‹</button>2026년 8월<button>›</button></div>
+            <div class="trk">
+              <label class="on"><input type="radio" name="t" checked>A트랙</label>
+              <label><input type="radio" name="t">B트랙</label>
+            </div>
+          </div>
+          <table class="cal"><thead><tr>
+            <th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
+          </tr></thead><tbody id="calbody"></tbody></table>
+        </div>
+      </div>
+      <div>
+        <div class="head"><div class="sec">TO-DO</div></div>
+        <div class="panel">
+          <div class="tabs">
+            <span>전체 <i class="n">14</i></span><span class="on">할일 <i class="n">6</i></span>
+            <span>완료 <i class="n">8</i></span><span class="filt">⚙</span>
+          </div>
+          <div class="grouplab">이번 주</div>
+          <button class="todo" onclick="go('ips')">
+            <div class="d"><b>03</b><small>목요일</small></div>
+            <div><div class="sub">Peer Coaching</div>
+              <div class="t">Track A+B - Peer coaching 0주차 사전과제</div></div>
+          </button>
+          <button class="todo" onclick="go('ips')">
+            <div class="d"><b>03</b><small>목요일</small></div>
+            <div><div class="sub">Peer Coaching</div><div class="t">Peer Coaching 1주차 셀프피드백</div></div>
+          </button>
+          <button class="todo" onclick="go('ips')">
+            <div class="d"><b>04</b><small>금요일</small></div>
+            <div><div class="sub">Interviewing as Exploration</div><div class="t">Interviewing as Exploration 0주차 셀프피드백</div></div>
+          </button>
+          <button class="todo" onclick="go('ips')">
+            <div class="d"><b>04</b><small>금요일</small></div>
+            <div><div class="sub">Self-Introduction</div><div class="t">Self-Introduction 0주차 셀프피드백</div></div>
+          </button>
+          <button class="todo" onclick="go('ips')">
+            <div class="d"><b>04</b><small>금요일</small></div>
+            <div><div class="sub">Visual Translation</div><div class="t">Visual Translation 0주차 셀프피드백</div></div>
+          </button>
+          <div class="grouplab">다음 주</div>
+          <button class="todo" onclick="go('ips')">
+            <div class="d"><b>06</b><small>일요일</small></div>
+            <div><div class="sub">Iterative Problem Solving</div>
+              <div class="t">Track A - IPS 0주차 사전 과제</div>
+              <div class="hint">→ 과제 화면 열기</div></div>
+          </button>
+          <div class="grouplab">완료</div>
+          <div class="todo done">
+            <div class="d"><b>29</b><small>토요일</small></div>
+            <div><div class="sub">Engaging with AI</div><div class="t">Track A+B - Engaging with AI 0주차 사전 과제 (재안내)</div></div>
+          </div>
+          <button class="more">더보기 2건 ⌄</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALENDAR -->
+  <div id="v-cal" class="hide">
+    <div class="panel" style="text-align:center;padding:100px 24px;color:var(--muted)">
+      캘린더는 기존 화면 그대로입니다. 이 프로토타입에서는 과목 탭만 새로 만들었어요.
+    </div>
+  </div>
+
+  <!-- COURSES -->
+  <div id="v-courses" class="hide">
+    <div class="filter"><button class="chip on">A트랙</button><button class="chip">B트랙</button></div>
+    <div class="cgrid" id="cgrid"></div>
+  </div>
+
+  <!-- ASSIGNMENT -->
+  <div id="v-ips" class="hide">
+    <div class="crumb"><button onclick="go('courses')">과목</button> › <button onclick="go('courses')">Iterative Problem Solving</button> › <span>0주차 사전 과제</span></div>
+    <div class="detail">
+      <div class="ahead">
+        <div>
+          <div class="eng">Iterative Problem Solving · Track A</div>
+          <h2>Track A - IPS 0주차 사전 과제</h2>
+        </div>
+        <div class="due2">
+          <div class="lab">마감</div><div class="v">9/6 (일) 23:59</div>
+        </div>
+      </div>
+      <div class="slots">
+        <div class="slotlab">수행</div>
+        <a class="slot" href="https://discord.com/channels/1491311095606939728/1541687428807528489" target="_blank">
+          <span class="si">💬</span>
+          <span><span class="st">과제 지시문</span><span class="sd">디스코드 · 전문가 공지와 질문 스레드</span></span>
+          <span class="go">열기 ↗</span></a>
+        <a class="slot" href="https://docs.google.com/document/d/1zdDlGum9i_57FXLXJtD4MnfzRVMJZVTvBmdTFD3Okws/edit?tab=t.0" target="_blank">
+          <span class="si">📄</span>
+          <span><span class="st">가이드라인</span><span class="sd">구글 독스 · Warm-up~3주차 탭으로 바로 열림</span></span>
+          <span class="go">열기 ↗</span></a>
+        <button class="slot" onclick="openViewer()">
+          <span class="si">📘</span>
+          <span><span class="st">코스 프로필</span><span class="sd">이 화면에서 넘겨보기 · 루브릭 포함</span></span>
+          <span class="go">보기</span></button>
+
+        <div class="slotlab" style="margin-top:24px">제출</div>
+        <a class="slot act" href="https://docs.google.com/forms/d/e/1FAIpQLSepjsSAj-G9kGbWKYq_oFPgaYax0JFimX3MSPU9QQ-e8qjbEA/viewform" target="_blank">
+          <span class="si">📤</span>
+          <span><span class="st">과제 제출</span><span class="sd">구글 폼 · 9/6 (일) 23:59 마감</span></span>
+          <span class="go">제출하기 ↗</span></a>
+        <a class="slot" href="https://docs.google.com/forms/d/e/1FAIpQLSeZZnrHPTpprHzhIGVgxsQr96n_vl52vbistW58IBOHM4vLeA/viewform" target="_blank">
+          <span class="si">✍️</span>
+          <span><span class="st">셀프피드백</span><span class="sd">구글 폼 · 9/4 (금) 23:59 마감</span></span>
+          <span class="go">작성하기 ↗</span></a>
+      </div>
+      <div class="note">v0.1 이라도 먼저 제출할 수 있어요. 제출 후에도 문서를 이어서 고칠 수 있습니다.</div>
+    </div>
+  </div>
+</div>
+
+<div class="mask" id="mask" onclick="if(event.target===this)closeViewer()">
+  <div class="viewer">
+    <div class="vhead"><b>Iterative Problem Solving · 코스 프로필</b><button onclick="closeViewer()">닫기 ✕</button></div>
+    <div class="vbody"><div class="page" id="page"></div></div>
+    <div class="vfoot">
+      <button onclick="flip(-1)" id="prev">← 이전</button>
+      <span id="pnum">1 / 4</span>
+      <button onclick="flip(1)" id="next">다음 →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* 실제 PDF를 쓸 때는 아래 배열 항목을 이미지로 교체하세요.
+   예: '<img src="./profile-1.png" style="width:100%">' */
+const pages = [
+ `<div class="lab">COURSE PROFILE</div><h4>Iterative Problem Solving</h4>
+  <p>처음 발견한 문제의 해결책은 사용자의 문제를 해소하지 못할 때가 많다. 이 수업에서는 표면적인 현상 너머의 근본 원인을 집요하게 파고들어, 해결책을 만들어 검증할 때마다 문제를 더 깊이 다시 정의한다.</p>
+  <p style="margin-top:14px">문제의 해상도를 높여가며 가치 있는 문제에 도달하고, 그것을 디자인으로 해결하는 법을 체화하게 된다.</p>`,
+ `<div class="lab">일정</div><h4>주차별 구성</h4>
+  <ul><li>Warm-up~3주차 — 1 Pager와 프로토타입</li><li>4~7주차 — 인터뷰 전후의 문제 검증</li><li>8~11주차 — 사용자 목표와 원인 해결</li></ul>
+  <p style="margin-top:16px">매주 산출물을 만들고, 다음 주에 그 산출물을 근거로 문제를 다시 정의한다.</p>`,
+ `<div class="lab">산출물</div><h4>0주차 사전 과제</h4>
+  <ul><li>1 Pager — 후킹용 한 줄 소개 / 문제 정의 / 솔루션 / 기대 효과, 각 300자 이내</li><li>프로토타입 — 동료 학습자가 열어볼 수 있는 형태</li></ul>
+  <p style="margin-top:16px">1 Pager는 프로토타입을 열기 전에 읽는 글이다. 맥락을 모르는 사람도 문제가 일어나는 장면을 그릴 수 있게 쓴다.</p>`,
+ `<div class="lab">평가</div><h4>루브릭</h4>
+  <ul><li>문제 정의 — 실제 사건이나 발화에서 출발했는가</li><li>솔루션 — 각 장치가 문제의 어느 부분을 없애는지 보이는가</li><li>기대 효과 — 검증에서 관찰할 수 있는 행동으로 썼는가</li><li>이터레이션 — 검증 결과로 문제를 다시 정의했는가</li></ul>`
+];
+let p = 0;
+
+const courses = [
+  {en:'Iterative Problem Solving', ko:'파고드는 문제 해결', due:'0주차 사전 과제 · 9/6 마감', live:true},
+  {en:'Peer Coaching', ko:'상호 코칭'},
+  {en:'Engaging with AI', ko:'생산적 마찰이 있는 AI'},
+  {en:'Visual Translation', ko:'시각적 번역'},
+  {en:'Typography as Foundation', ko:'기본기로서의 타이포그래피'},
+  {en:'Beautiful Interface', ko:'아름다운 인터페이스'},
+  {en:'Art of Reading', ko:'읽기의 기술'},
+  {en:'Interviewing as Exploration', ko:'탐험으로서의 인터뷰'},
+  {en:'Self-Introduction', ko:'자기소개'}
+];
+document.getElementById('cgrid').innerHTML = courses.map(c => c.live
+  ? `<button class="course" onclick="go('ips')"><div class="eng">${c.en}</div><h3>${c.ko}</h3>
+     <div class="meta"><span class="dot"></span>${c.due}</div></button>`
+  : `<div class="course empty"><div class="eng">${c.en}</div><h3>${c.ko}</h3>
+     <div class="meta">과제 없음</div></div>`).join('');
+
+/* 2026년 8월 — 1일이 토요일 */
+const cells = [];
+[26,27,28,29,30,31].forEach(d => cells.push({d, off:true}));
+for (let d=1; d<=31; d++) cells.push({d});
+[1,2,3,4,5].forEach(d => cells.push({d, off:true}));
+const marks = {
+  15:{hol:'광복절'}, 17:{hol:'대체공휴일'},
+  24:{ev:['OT']}, 25:{ev:['Phi Sync','Pit-stop']}, 26:{ev:['Pit-stop','Pit-stop']},
+  27:{ev:['Pit-stop','Pit-stop']}, 28:{ev:['Peer Coaching (OT)','Pit-stop']},
+  29:{due:'Engaging with AI 마감'}
+};
+document.getElementById('calbody').innerHTML = Array.from({length:6}, (_,r) =>
+  '<tr>' + cells.slice(r*7,r*7+7).map(c => {
+    if (c.off) return `<td><span class="num off">${c.d}</span></td>`;
+    const m = marks[c.d] || {};
+    return `<td class="${c.d===30?'today':''}"><span class="num">${c.d}</span>
+      ${m.hol ? `<span class="hol">${m.hol}</span>` : ''}
+      ${(m.ev||[]).map(e => `<div class="ev">${e}</div>`).join('')}
+      ${m.due ? `<div class="ev due">${m.due}</div>` : ''}</td>`;
+  }).join('') + '</tr>').join('');
+
+const views = {home:'홈', cal:'캘린더', courses:'과목', ips:'과목'};
+function go(v){
+  for (const k in views) document.getElementById('v-'+k).classList.add('hide');
+  const el = document.getElementById('v-'+v);
+  el.classList.remove('hide');
+  document.getElementById('title').textContent = views[v];
+  ['home','cal','courses'].forEach(k =>
+    document.getElementById('n-'+k).classList.toggle('on', k===v || (v==='ips'&&k==='courses')));
+  window.scrollTo(0,0);
+}
+function render(){
+  document.getElementById('page').innerHTML = pages[p];
+  document.getElementById('pnum').textContent = (p+1)+' / '+pages.length;
+  document.getElementById('prev').disabled = p===0;
+  document.getElementById('next').disabled = p===pages.length-1;
+}
+function openViewer(){ p=0; render(); document.getElementById('mask').classList.add('open'); }
+function closeViewer(){ document.getElementById('mask').classList.remove('open'); }
+function flip(d){ p=Math.max(0,Math.min(pages.length-1,p+d)); render(); }
+document.addEventListener('keydown', e => {
+  if(!document.getElementById('mask').classList.contains('open')) return;
+  if(e.key==='Escape') closeViewer();
+  if(e.key==='ArrowRight') flip(1);
+  if(e.key==='ArrowLeft') flip(-1);
+});
+go('home');
+</script>
