@@ -168,41 +168,6 @@ a{color:inherit;text-decoration:none}
 .btn:hover{border-color:#141414}
 .btn.primary{background:#141414;color:#fff;border-color:#141414;font-weight:500}
 
-/* ── submission status & history ── */
-.submission{border:1px solid #EDEEF0;border-radius:10px;overflow:hidden;background:var(--card)}
-.sub-status{display:flex;align-items:center;gap:12px;padding:16px;border-bottom:1px solid var(--line)}
-.status-check{width:28px;height:28px;border-radius:50%;background:var(--blue-bg);color:var(--blue);
-  display:grid;place-items:center;font-size:15px;font-weight:700;flex:0 0 28px}
-.status-copy{display:flex;flex-direction:column;gap:3px}
-.status-copy strong{font-size:15px;font-weight:600}
-.status-copy span{font-size:13px;color:var(--muted)}
-.status-pill{margin-left:auto;padding:5px 10px;border-radius:99px;background:var(--blue-bg);color:var(--blue);
-  font-size:12px;font-weight:700;white-space:nowrap}
-.history{padding:0 16px}
-.history-head{display:flex;align-items:center;justify-content:space-between;padding:15px 0 7px}
-.history-head strong{font-size:13px;font-weight:700}
-.history-head span{font-size:12px;color:var(--muted)}
-.history-row{display:grid;grid-template-columns:minmax(72px,.6fr) minmax(180px,1fr) auto;
-  align-items:center;gap:16px;padding:13px 0;border-bottom:1px solid var(--line)}
-.history-row:last-child{border-bottom:0}
-.version{display:flex;align-items:center;gap:7px;font-size:14px;font-weight:600}
-.latest{font-size:10px;color:var(--blue);background:var(--blue-bg);padding:3px 6px;border-radius:4px;font-weight:700}
-.submitted-at{font-size:13px;color:var(--muted)}
-.history-row .btn{margin-left:0}
-.sub-cta{padding:12px 16px 16px;display:flex;justify-content:flex-end}
-.sub-cta .btn{margin-left:0}
-
-/* ── submission detail modal ── */
-.viewer.submission-viewer{width:min(560px,95vw);height:auto;max-height:85vh}
-.submission-body{padding:24px;overflow:auto;background:var(--card)}
-.submission-summary{display:grid;grid-template-columns:96px 1fr;row-gap:14px;font-size:14px}
-.submission-summary dt{color:var(--muted)}
-.submission-summary dd{font-weight:500}
-.response{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
-.response .response-label{font-size:13px;color:var(--muted);margin-bottom:8px}
-.response .response-value{font-size:14px;line-height:1.6;padding:14px 16px;background:#F8F9FA;border-radius:8px}
-.response-link{display:inline-block;margin-top:8px;color:var(--blue);text-decoration:underline;text-underline-offset:3px}
-
 /* ── viewer ── */
 .mask{position:fixed;inset:0;background:rgba(20,20,20,.55);display:none;place-items:center;z-index:50;padding:32px}
 .mask.open{display:grid}
@@ -216,11 +181,6 @@ a{color:inherit;text-decoration:none}
 .hide{display:none!important}
 @media(max-width:1080px){.grid2{grid-template-columns:1fr}}
 @media(max-width:900px){.side{display:none}body{padding-left:24px;padding-right:24px}}
-@media(max-width:620px){
-  body{padding:20px 16px 56px}.bar{align-items:flex-start}.ext{gap:6px;flex-wrap:wrap;justify-content:flex-end}
-  .history-row{grid-template-columns:1fr auto;gap:5px 12px}.submitted-at{grid-column:1}.history-row .btn{grid-column:2;grid-row:1 / span 2}
-  .submission-summary{grid-template-columns:84px 1fr}
-}
 </style>
 
 <nav class="side">
@@ -406,59 +366,12 @@ a{color:inherit;text-decoration:none}
           <span class="btn">구글 독스에서 보기</span></a>
 
         <div class="slotlab" style="margin-top:24px">제출</div>
-        <div class="submission">
-          <div class="sub-status">
-            <span class="status-check" aria-hidden="true">✓</span>
-            <span class="status-copy">
-              <strong>과제 제출 완료</strong>
-              <span>최신 버전 v0.2 · 9/5 (토) 01:32 제출</span>
-            </span>
-            <span class="status-pill">제출 완료</span>
-          </div>
-          <div class="history">
-            <div class="history-head"><strong>이전 제출 이력</strong><span>총 2개 버전</span></div>
-            <div class="history-row">
-              <div class="version">v0.2 <span class="latest">최신</span></div>
-              <div class="submitted-at">9/5 (토) 01:32 제출</div>
-              <button class="btn" type="button" onclick="openSubmission('v02')">제출 내용 보기</button>
-            </div>
-            <div class="history-row">
-              <div class="version">v0.1</div>
-              <div class="submitted-at">9/3 (목) 22:14 제출</div>
-              <button class="btn" type="button" onclick="openSubmission('v01')">제출 내용 보기</button>
-            </div>
-          </div>
-          <div class="sub-cta">
-            <a class="btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLSepjsSAj-G9kGbWKYq_oFPgaYax0JFimX3MSPU9QQ-e8qjbEA/viewform" target="_blank">다음 버전 제출하기</a>
-          </div>
-        </div>
+        <a class="slot" href="https://docs.google.com/forms/d/e/1FAIpQLSepjsSAj-G9kGbWKYq_oFPgaYax0JFimX3MSPU9QQ-e8qjbEA/viewform" target="_blank">
+          <span class="sbody"><span class="st">과제 제출</span><span class="sd">구글 폼 · 9/6 (일) 23:59 마감</span></span>
+          <span class="btn primary">제출하기</span></a>
         <a class="slot" href="https://docs.google.com/forms/d/e/1FAIpQLSeZZnrHPTpprHzhIGVgxsQr96n_vl52vbistW58IBOHM4vLeA/viewform" target="_blank">
           <span class="sbody"><span class="st">셀프피드백</span><span class="sd">구글 폼 · 9/4 (금) 23:59 마감</span></span>
           <span class="btn">작성하기</span></a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="mask" id="submissionMask" onclick="if(event.target===this)closeSubmission()">
-  <div class="viewer submission-viewer" role="dialog" aria-modal="true" aria-labelledby="submissionTitle">
-    <div class="vhead">
-      <b id="submissionTitle">제출 내용</b>
-      <button type="button" onclick="closeSubmission()" aria-label="제출 내용 닫기">닫기 ✕</button>
-    </div>
-    <div class="submission-body">
-      <dl class="submission-summary">
-        <dt>과제</dt><dd>Track A - IPS 0주차 사전 과제</dd>
-        <dt>버전</dt><dd id="submissionVersion"></dd>
-        <dt>제출 시각</dt><dd id="submissionTime"></dd>
-      </dl>
-      <div class="response">
-        <div class="response-label">제출한 링크</div>
-        <div class="response-value">구글 독스 작업물<br><span class="response-link">docs.google.com/document/…/edit</span></div>
-      </div>
-      <div class="response">
-        <div class="response-label">제출 메모</div>
-        <div class="response-value" id="submissionNote"></div>
       </div>
     </div>
   </div>
@@ -563,24 +476,9 @@ function go(v){
 }
 function openViewer(){ document.getElementById('mask').classList.add('open'); }
 function closeViewer(){ document.getElementById('mask').classList.remove('open'); }
-const submissions = {
-  v02:{version:'v0.2 · 최신 버전', time:'2026. 9. 5. (토) 오전 1:32', note:'사용자 검증 내용을 반영해 문제 정의와 솔루션을 업데이트했습니다.'},
-  v01:{version:'v0.1', time:'2026. 9. 3. (목) 오후 10:14', note:'흩어진 과제 수행 링크를 LMS 안 한 자리에 모은 첫 번째 버전입니다.'}
-};
-function openSubmission(id){
-  const submission = submissions[id];
-  if(!submission) return;
-  document.getElementById('submissionVersion').textContent = submission.version;
-  document.getElementById('submissionTime').textContent = submission.time;
-  document.getElementById('submissionNote').textContent = submission.note;
-  document.getElementById('submissionMask').classList.add('open');
-  document.querySelector('#submissionMask .vhead button').focus();
-}
-function closeSubmission(){ document.getElementById('submissionMask').classList.remove('open'); }
 document.addEventListener('keydown', e => {
-  if(e.key!=='Escape') return;
-  if(document.getElementById('submissionMask').classList.contains('open')) closeSubmission();
-  else if(document.getElementById('mask').classList.contains('open')) closeViewer();
+  if(!document.getElementById('mask').classList.contains('open')) return;
+  if(e.key==='Escape') closeViewer();
 });
 go('home');
 </script>
