@@ -161,12 +161,17 @@ a{color:inherit;text-decoration:none}
   background:var(--card);width:100%;text-align:left;transition:.15s}
 .slot:hover{border-color:var(--ink);background:#FAFBFC}
 .sbody{display:flex;flex-direction:column;gap:3px}
+.stline{display:flex;align-items:center;gap:8px}
 .slot .st{font-size:15px;font-weight:600;display:block}
 .slot .sd{font-size:13px;color:var(--muted);display:block}
+.done-badge{font-size:10px;font-weight:700;line-height:1;background:var(--blue);color:#fff;
+  padding:4px 7px;border-radius:4px}
 .btn{font-size:13px;padding:8px 14px;border:1px solid #E1E3E6;border-radius:8px;
      background:#fff;white-space:nowrap;margin-left:auto}
 .btn:hover{border-color:#141414}
 .btn.primary{background:#141414;color:#fff;border-color:#141414;font-weight:500}
+.slot-actions{display:flex;align-items:center;gap:8px;margin-left:auto}
+.slot-actions .btn{margin-left:0}
 
 /* ── viewer ── */
 .mask{position:fixed;inset:0;background:rgba(20,20,20,.55);display:none;place-items:center;z-index:50;padding:32px}
@@ -181,6 +186,10 @@ a{color:inherit;text-decoration:none}
 .hide{display:none!important}
 @media(max-width:1080px){.grid2{grid-template-columns:1fr}}
 @media(max-width:900px){.side{display:none}body{padding-left:24px;padding-right:24px}}
+@media(max-width:620px){
+  .submit-slot{align-items:stretch;flex-direction:column}
+  .submit-slot .slot-actions{width:100%;justify-content:flex-end}
+}
 </style>
 
 <nav class="side">
@@ -366,9 +375,16 @@ a{color:inherit;text-decoration:none}
           <span class="btn">구글 독스에서 보기</span></a>
 
         <div class="slotlab" style="margin-top:24px">제출</div>
-        <a class="slot" href="https://docs.google.com/forms/d/e/1FAIpQLSepjsSAj-G9kGbWKYq_oFPgaYax0JFimX3MSPU9QQ-e8qjbEA/viewform" target="_blank">
-          <span class="sbody"><span class="st">과제 제출</span><span class="sd">구글 폼 · 9/6 (일) 23:59 마감</span></span>
-          <span class="btn primary">제출하기</span></a>
+        <div class="slot submit-slot">
+          <span class="sbody">
+            <span class="stline"><span class="st">과제 제출</span><span class="done-badge">완료</span></span>
+            <span class="sd">구글 폼 · 9/6 (일) 23:59 마감</span>
+          </span>
+          <span class="slot-actions">
+            <button class="btn" type="button">제출한 과제 보기</button>
+            <a class="btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLSepjsSAj-G9kGbWKYq_oFPgaYax0JFimX3MSPU9QQ-e8qjbEA/viewform" target="_blank">제출하기</a>
+          </span>
+        </div>
         <a class="slot" href="https://docs.google.com/forms/d/e/1FAIpQLSeZZnrHPTpprHzhIGVgxsQr96n_vl52vbistW58IBOHM4vLeA/viewform" target="_blank">
           <span class="sbody"><span class="st">셀프피드백</span><span class="sd">구글 폼 · 9/4 (금) 23:59 마감</span></span>
           <span class="btn">작성하기</span></a>
